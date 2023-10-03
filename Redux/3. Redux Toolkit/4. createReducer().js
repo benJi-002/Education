@@ -1,3 +1,4 @@
+// Обычно создаётся в файле, который расположен в папке reducers
 import { createReducer } from "@reduxjs/toolkit";
 
 // Импортируем экшены
@@ -17,7 +18,7 @@ const initialState = {
 
 // Передаём стейт и билдер. В билдере разбираем кейсы без необходимости писать тип экшена.
 // В addCaase() передаём необходимый экшн и вторым аргуентом стейт (либо стейт с объектом экшена).
-// Можно напрямую мутировать стейт, так как под капотом createReducer использует библиотеку inner js, которая переделывает код и сохраняет принцип иммутабельности
+// Можно напрямую мутировать стейт, так как под капотом createReducer использует библиотеку immer js, которая переделывает код и сохраняет принцип иммутабельности
 // Однако, если поставить return или не обернуть функцию state в фигурные скобки, то inner js будет думать, что разработчик уже исполнил принцип иммутабельности
 const heroes = createReducer(initialState, builder => {
     builder
@@ -64,36 +65,36 @@ const heroes = createReducer(initialState, {
 
 
 // Вариант без использования тулкита
-// const heroes = (state = initialState, action) => {
-//     switch (action.type) {
-//         case 'HEROES_FETCHING':
-//             return {
-//                 ...state,
-//                 heroesLoadingStatus: 'loading'
-//             }
-//         case 'HEROES_FETCHED':
-//             return {
-//                 ...state,
-//                 heroes: action.payload,
-//                 heroesLoadingStatus: 'idle'
-//             }
-//         case 'HEROES_FETCHING_ERROR':
-//             return {
-//                 ...state,
-//                 heroesLoadingStatus: 'error'
-//             }
-//         case 'HERO_CREATED':
-//             return {
-//                 ...state,
-//                 heroes: [...state.heroes, action.payload]
-//             }
-//         case 'HERO_DELETED': 
-//             return {
-//                 ...state,
-//                 heroes: state.heroes.filter(item => item.id !== action.payload)
-//             }
-//         default: return state
-//     }
-// }
+const heroes = (state = initialState, action) => {
+    switch (action.type) {
+        case 'HEROES_FETCHING':
+            return {
+                ...state,
+                heroesLoadingStatus: 'loading'
+            }
+        case 'HEROES_FETCHED':
+            return {
+                ...state,
+                heroes: action.payload,
+                heroesLoadingStatus: 'idle'
+            }
+        case 'HEROES_FETCHING_ERROR':
+            return {
+                ...state,
+                heroesLoadingStatus: 'error'
+            }
+        case 'HERO_CREATED':
+            return {
+                ...state,
+                heroes: [...state.heroes, action.payload]
+            }
+        case 'HERO_DELETED': 
+            return {
+                ...state,
+                heroes: state.heroes.filter(item => item.id !== action.payload)
+            }
+        default: return state
+    }
+}
 
 export default heroes;

@@ -1,4 +1,6 @@
+// Обычно используется в файле index.js, который расположен в папке store
 import { configureStore } from '@reduxjs/toolkit'
+//импорт редюсеров (обычно из папки reducers)
 import heroes from '..';
 import filters from '..';
 
