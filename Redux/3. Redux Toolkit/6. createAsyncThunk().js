@@ -1,3 +1,4 @@
+// Обычно создаётся в файле со слайсом, в данном случае это слайс heroesSlice
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // Наш хук из которого тянуться запросы
 import {useHttp} from '../../hooks/http.hook';
@@ -63,6 +64,7 @@ const heroesSlice = createSlice({
 const {actions, reducer} = heroesSlice;
 
 export default reducer;
+
 export const {
     heroesFetching,
     heroesFetched,
