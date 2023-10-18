@@ -5,6 +5,11 @@ import {useHttp} from '../../hooks/http.hook';
 // Создаём адаптер
 const heroesAdapter = createEntityAdapter();
 
+// Так бы выгляде адаптер, если бы нужно было указать, из какого поля ему брать id
+// const heroesAdapter = createEntityAdapter({
+//     selectId: heroes => heroes.name
+// });
+
 // Initial state созданный вручную до использования адаптера
 // const initialState = {
 //     heroes: [],
@@ -14,7 +19,7 @@ const heroesAdapter = createEntityAdapter();
 // Используем внутреннюю CRUD function адаптера для создания initialState
 // Теперь initialState будет иметь такую структуру:
 // {ids: [], entities: {}}
-// ids - массив id от нуля
+// ids - массив id, которые должны быть у сущностей, отданных сервером (ВАЖНО!!! Может не работать, если не будет id. Если id в сущности лежит не в поле с ключем id, то при создании адаптера можно указать, с какого поля адаптер будет подтягивать id-шник)
 // entities - объект ключей со значениями, где ключи - id из массива ids, значения - объекты с сущностями, полученными с сервера
 const initialState = heroesAdapter.getInitialState({
     // Можно добавлять свои поля в дефолтный стейт
@@ -75,7 +80,7 @@ export const filteredHeroesSelector = createSelector(
     (state) => state.filters.activeFilter,
     // Ниже запись будет равна
     // (state) => state.heroes.entities
-    // Этот селектор отдаст нам массив объектов с сущностями, которые лежат в стейте в поле entities
+    // Этот селектор АВТОМАТИЧЕСКИ получит и отдаст нам массив объектов с сущностями, которые лежат в стейте в поле entities
     selectAll,
     (filter, heroes) => {
         if (filter === 'all') {
