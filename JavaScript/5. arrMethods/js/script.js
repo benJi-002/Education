@@ -74,5 +74,3 @@ const newArr = Object.entries(obj)
     .map(item => item[0]);
 
 console.log(newArr);
-
-
